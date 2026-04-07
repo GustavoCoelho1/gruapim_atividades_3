@@ -1,7 +1,7 @@
 package com.exemplo.api.controllers;
 
-import com.exemplo.api.models.Contact;
-import com.exemplo.api.repositories.ContactRepository;
+import com.exemplo.api.models.Contato;
+import com.exemplo.api.repositories.ContatoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,52 +12,52 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/contacts")
+@RequestMapping("/api/contatos")
 public class ContatoController {
 
     @Autowired
-    private ContatoRepository contactRepository;
+    private ContatoRepository contatoRepository;
 
     // POST tradicional (Inclui o @Valid do Desafio 2)
     @PostMapping
-    public ResponseEntity<Contact> createContact(@Valid @RequestBody Contact contact) {
-        return ResponseEntity.ok(contactRepository.save(contact));
+    public ResponseEntity<Contato> createContato(@Valid @RequestBody Contato contato) {
+        return ResponseEntity.ok(contatoRepository.save(contato));
     }
 
     // Exercício 1 - Criando um Novo Endpoint GET (Busca por nome)
     // Usamos @RequestParam para capturar a query string (?name=João)
     @GetMapping("/search")
-    public ResponseEntity<List<Contact>> searchByName(@RequestParam String name) {
-        List<Contact> contacts = contactRepository.findByNomeContainingIgnoreCase(name);
+    public ResponseEntity<List<Contato>> searchByName(@RequestParam String name) {
+        List<Contato> contatos = contatoRepository.findByNomeContainingIgnoreCase(name);
         // Retorna a lista (vazia ou populada) com status 200 OK
-        return ResponseEntity.ok(contacts);
+        return ResponseEntity.ok(contatos);
     }
 
     // Exercício 2 - Implementando um Método PATCH
     // Recebemos um Map<String, Object> para saber exatamente quais campos foram enviados no JSON
     @PatchMapping("/{id}")
-    public ResponseEntity<Contact> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        Optional<Contact> optionalContact = contactRepository.findById(id);
+    public ResponseEntity<Contato> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<Contato> optionalContato = contatoRepository.findById(id);
 
-        if (optionalContact.isEmpty()) {
+        if (optionalContato.isEmpty()) {
             return ResponseEntity.notFound().build(); // Retorna 404 se não achar
         }
 
-        Contact contact = optionalContact.get();
+        Contato contato = optionalContato.get();
 
         // Atualiza apenas os campos que vieram no corpo da requisição (Map)
         if (updates.containsKey("nome")) {
-            contact.setNome((String) updates.get("nome"));
+            contato.setNome((String) updates.get("nome"));
         }
         if (updates.containsKey("telefone")) {
-            contact.setTelefone((String) updates.get("telefone"));
+            contato.setTelefone((String) updates.get("telefone"));
         }
         if (updates.containsKey("email")) {
-            contact.setEmail((String) updates.get("email"));
+            contato.setEmail((String) updates.get("email"));
         }
 
         // Salva e retorna o contato atualizado
-        contactRepository.save(contact);
-        return ResponseEntity.ok(contact);
+        contatoRepository.save(contato);
+        return ResponseEntity.ok(contato);
     }
 }

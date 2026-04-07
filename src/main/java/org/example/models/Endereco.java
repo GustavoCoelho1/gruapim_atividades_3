@@ -15,13 +15,13 @@ public class Endereco {
     private String estado;
     private String cep;
 
-    // Desafio 1: Relação N:1 com Contact.
+    // Desafio 1: Relação N:1 com Contato.
     // @JoinColumn define a chave estrangeira no banco de dados.
     // @JsonBackReference é a contraparte do ManagedReference para evitar loops no JSON.
     @ManyToOne
-    @JoinColumn(name = "contact_id", nullable = false)
+    @JoinColumn(name = "contato_id", nullable = false)
     @JsonBackReference
-    private Contact contact;
+    private Contato contato;
 
     // Getters e Setters
     public Long getId() { return id; }
@@ -39,6 +39,6 @@ public class Endereco {
     public String getCep() { return cep; }
     public void setCep(String cep) { this.cep = cep; }
 
-    public Contact getContact() { return contact; }
-    public void setContact(Contact contact) { this.contact = contact; }
+    public Contato getContato() { return contato; }
+    public void setContato(Contato contato) { this.contato = contato; }
 }

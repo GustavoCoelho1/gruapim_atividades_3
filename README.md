@@ -22,7 +22,7 @@ Atividades referentes a 3a aula de APIs e Microservicoes
 
     1. Nível 0 (Swamp of Pox): Usa HTTP apenas como túnel, geralmente com um único endpoint (ex: /api) e um único método (POST) para tudo.
 
-    2. Nível 1 (Recursos): Começa a dividir a API em múltiplos endpoints baseados em recursos (ex: /contacts, /addresses), mas ainda usa o mesmo verbo HTTP para várias ações.
+    2. Nível 1 (Recursos): Começa a dividir a API em múltiplos endpoints baseados em recursos (ex: /contatos, /enderecos), mas ainda usa o mesmo verbo HTTP para várias ações.
 
     3. Nível 2 (Verbos HTTP): Usa recursos e os verbos corretos do HTTP (GET para ler, POST para criar, DELETE para apagar) junto com os status codes corretos.
 

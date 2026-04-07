@@ -28,12 +28,12 @@ public class Contato {
     private String email;
 
     // Desafio 1: Relação 1:N com Endereços.
-    // mappedBy indica que a relação é gerenciada pelo campo 'contact' na classe Address.
+    // mappedBy indica que a relação é gerenciada pelo campo 'contato' na classe Endereco.
     // cascade = CascadeType.ALL permite salvar endereços junto com o contato.
     // @JsonManagedReference evita o loop infinito ao serializar para JSON.
-    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Address> addresses = new ArrayList<>();
+    private List<Endereco> enderecos = new ArrayList<>();
 
     // Getters e Setters
     public Long getId() { return id; }
@@ -48,6 +48,6 @@ public class Contato {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public List<Address> getAddresses() { return addresses; }
-    public void setAddresses(List<Address> addresses) { this.addresses = addresses; }
+    public List<Endereco> getEnderecoes() { return enderecos; }
+    public void setEnderecoes(List<Endereco> enderecos) { this.enderecos = enderecos; }
 }

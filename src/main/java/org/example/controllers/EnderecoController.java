@@ -1,9 +1,9 @@
 package com.exemplo.api.controllers;
 
-import com.exemplo.api.models.Address;
-import com.exemplo.api.models.Contact;
-import com.exemplo.api.repositories.AddressRepository;
-import com.exemplo.api.repositories.ContactRepository;
+import com.exemplo.api.models.Endereco;
+import com.exemplo.api.models.Contato;
+import com.exemplo.api.repositories.EnderecoRepository;
+import com.exemplo.api.repositories.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,40 +12,40 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/contacts")
+@RequestMapping("/api/contatos")
 public class EnderecoController {
 
     @Autowired
-    private EnderecoRepository addressRepository;
+    private EnderecoRepository enderecoRepository;
 
     @Autowired
-    private ContatoRepository contactRepository;
+    private ContatoRepository contatoRepository;
 
     // Desafio 1: Criando rota para adicionar um endereço a um contato
-    @PostMapping("/{contactId}/addresses")
-    public ResponseEntity<Address> createAddress(@PathVariable Long contactId, @RequestBody Address address) {
-        Optional<Contact> contact = contactRepository.findById(contactId);
+    @PostMapping("/{contatoId}/enderecos")
+    public ResponseEntity<Endereco> createEndereco(@PathVariable Long contatoId, @RequestBody Endereco endereco) {
+        Optional<Contato> contato = contatoRepository.findById(contatoId);
 
-        if (contact.isEmpty()) {
+        if (contato.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         // Vincula o endereço ao contato e salva
-        address.setContact(contact.get());
-        Address savedAddress = addressRepository.save(address);
+        endereco.setContato(contato.get());
+        Endereco savedEndereco = enderecoRepository.save(endereco);
 
-        return ResponseEntity.ok(savedAddress);
+        return ResponseEntity.ok(savedEndereco);
     }
 
     // Desafio 1: Rota GET para listar todos os endereços de um contato específico
-    @GetMapping("/{id}/addresses")
-    public ResponseEntity<List<Address>> getAddressesByContactId(@PathVariable Long id) {
+    @GetMapping("/{id}/enderecos")
+    public ResponseEntity<List<Endereco>> getEnderecoesByContatoId(@PathVariable Long id) {
         // Verifica se o contato existe antes de buscar os endereços
-        if (!contactRepository.existsById(id)) {
+        if (!contatoRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
 
-        List<Address> addresses = addressRepository.findByContactId(id);
-        return ResponseEntity.ok(addresses);
+        List<Endereco> enderecos = enderecoRepository.findByContatoId(id);
+        return ResponseEntity.ok(enderecos);
     }
 }
